@@ -17,7 +17,7 @@ Course page: https://fullstackopen.com/en/
 
 ## Repo structure
 Exercises are organized by course part (e.g., `part0`, `part1`, `part2`, etc.).  
-Each folder contains the code for that part’s exercises.
+Each folder contains my solutions for that part’s exercises.
 
 ## Notes
 - This is for learning/practice.
