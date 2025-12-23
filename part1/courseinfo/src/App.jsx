@@ -1,3 +1,43 @@
+const Header = ({course}) => {
+  return (
+    <div>
+      <h1>{course}</h1>
+    </div>
+  );
+}
+
+const Content = ({parts, exercises}) => {
+  return (
+    <div>
+      <p>
+        {parts[0]} {exercises[0]}
+      </p>
+      <p>
+        {parts[1]} {exercises[1]}
+      </p>
+      <p>
+        {parts[2]} {exercises[2]}
+      </p>
+    </div>
+  );
+}
+
+const Total = ({exercises}) => {
+  let sum = 0;
+
+  for (let i = 0; i < exercises.length; i++) {
+    sum += exercises[i];
+  }
+
+  return (
+    <div>
+      <p>
+        Number of exercises {sum}
+      </p>
+    </div>
+  );
+}
+
 const App = () => {
   const course = 'Half Stack application development'
   const part1 = 'Fundamentals of React'
@@ -9,17 +49,12 @@ const App = () => {
 
   return (
     <div>
-      <h1>{course}</h1>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      <Header course={course}/>
+      <Content 
+        parts={[part1, part2, part3]}
+        exercises={[exercises1, exercises2, exercises3]}
+      />
+      <Total exercises={[exercises1, exercises2, exercises3]}/>
     </div>
   )
 }
