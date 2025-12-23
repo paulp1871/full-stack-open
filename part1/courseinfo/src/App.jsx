@@ -1,4 +1,6 @@
 const Header = ({course}) => {
+  console.log(course);
+
   return (
     <div>
       <h1>{course}</h1>
@@ -6,30 +8,34 @@ const Header = ({course}) => {
   );
 }
 
-const Part = ({part, exercises}) => {
+const Part = ({name, amount}) => {
+  console.log(name, amount);
+
   return (
     <div>
       <p>
-        {part} {exercises}
+        {name} {amount}
       </p>
     </div>
   );
 }
 
-const Content = ({parts, exercises}) => {
+const Content = ({part1, part2, part3}) => {
+  console.log(part1, part2, part3);
+  
   return (
     <div>
       <Part 
-        part={parts[0]}
-        exercises={exercises[0]}
+        name={part1.name}
+        amount={part1.amount}
       />
       <Part 
-        part={parts[1]}
-        exercises={exercises[1]}
+        name={part2.name}
+        amount={part2.amount}
       />
       <Part 
-        part={parts[2]}
-        exercises={exercises[2]}
+        name={part3.name}
+        amount={part3.amount}
       />
     </div>
   );
@@ -64,8 +70,9 @@ const App = () => {
     <div>
       <Header course={course}/>
       <Content 
-        parts={[part1, part2, part3]}
-        exercises={[exercises1, exercises2, exercises3]}
+        part1={{name: part1, amount: exercises1}}
+        part2={{name: part2, amount: exercises2}}
+        part3={{name: part3, amount: exercises3}}
       />
       <Total exercises={[exercises1, exercises2, exercises3]}/>
     </div>
