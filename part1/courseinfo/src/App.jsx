@@ -8,22 +8,21 @@ const Header = ({course}) => {
   );
 }
 
-const Part = ({part}) => {
-  console.log(part);
-
+const Part = ({name, exercises}) => {
   return (
     <div>
       <p>
-        {part.name} {part.exercises}
+        {name} {exercises}
       </p>
     </div>
   );
 }
 
-const Content = ({children}) => {
+const Content = (parts) => {
+  console.log(parts);
   return (
     <div>
-      {children}
+      <Part name={parts[0].name} exercises={parts[0].exercises}/>
     </div>
   );
 }
@@ -62,11 +61,7 @@ const App = () => {
   return (
     <div>
       <Header course={course}/>
-      <Content>
-        <Part part={part1}/>
-        <Part part={part2}/>
-        <Part part={part3}/>
-      </Content>
+      <Content parts={[part1, part2, part3]}/>
       <Total exercises={[part1.exercises, part2.exercises, part3.exercises]}/>
     </div>
   )
