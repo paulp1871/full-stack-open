@@ -20,6 +20,7 @@ const Part = ({part}) => {
 
 const Content = ({courseParts}) => {
   const [partOne, partTwo, partThree] = courseParts;
+  
   return (
     <div>
       <Part part={partOne} />
@@ -29,10 +30,12 @@ const Content = ({courseParts}) => {
   );
 }
 
-const Total = ({courseExercises}) => {
+const Total = ({courseParts}) => {
+  const courseExercises = courseParts.map(value => value.exercises);
   const sum = courseExercises.reduce(
     (totalExercises, currPartExercises) => totalExercises + currPartExercises, 0
   );
+
   return (
     <div>
       <p>
@@ -60,7 +63,7 @@ const App = () => {
       }
     ]
   }
-  
+
   return (
     <div>
       <Header 
@@ -70,7 +73,7 @@ const App = () => {
         courseParts={course.parts}
       />
       <Total
-        courseExercises={course.parts.map(value => value.exercises)}
+        courseParts={course.parts}
       />
     </div>
   )
