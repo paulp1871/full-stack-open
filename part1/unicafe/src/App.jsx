@@ -12,6 +12,14 @@ const Statistics = (
     positive
   }
 ) => {
+  if (total < 1) {
+    return (
+      <>
+        <h2>statistics</h2>
+        <div>No feedback given</div>
+      </>
+  )
+  }
   return (
     <>
       <h2>statistics</h2>
@@ -31,8 +39,8 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const total = good + neutral + bad
-  const average = Number.isNaN((good * 1 + neutral * 0 + bad * -1)/total) ? 0 : (good * 1 + neutral * 0 + bad * -1)/total
-  const positivePercentage = Number.isNaN(good/total * 100) ? 0 : good/total * 100
+  const average = (good * 1 + neutral * 0 + bad * -1)/total
+  const positivePercentage = good/total * 100
 
   const handleGoodClick = () => {
     setGood(good + 1)
