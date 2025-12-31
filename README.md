@@ -1,10 +1,11 @@
 # Full Stack Open – Exercise Solutions
 
-This repository contains my solutions to the exercises from the University of Helsinki’s **Full Stack Open** course.
+This repository contains my solutions to the exercises from the University of Helsinki’s Full Stack Open course.
 
 ## About the course
 Full Stack Open covers modern web development with topics like:
 - JavaScript
+- TypeScript
 - React
 - Node.js / Express
 - REST APIs
