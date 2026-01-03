@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -11,7 +14,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const[newSearch, setNewSearch] = useState('');
 
-  const addName = (event) => {
+  const addPerson = (event) => {
     event.preventDefault();
 
     // Check fields
@@ -45,46 +48,23 @@ const App = () => {
     setNewSearch(event.target.value);
   }
 
-  const searchResult = (search) => {
-    if (search.length === 0) {
-      return persons.map(person => <p key={person.id}>{person.name} {person.number}</p>)
-    }
-    const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase()))
-    return filteredPersons.map(person => <p key={person.id}>{person.name} {person.number}</p>)
-  }
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with
-        <input
-          value={newSearch}
-          onChange={handleSearchChange}
-        />
-      </div>
-      <h2>add a new</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: 
-          <input
-             value={newName}
-             onChange={handleNameChange}
-          />
-        </div>
-         <div>
-          number: 
-          <input
-            value={newNumber}
-            onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {searchResult(newSearch)}
+      <Filter 
+        value={newSearch}
+        onChange={handleSearchChange}
+      />
+      <h3>add a new</h3>
+      <PersonForm
+        onSubmit={addPerson}
+        nameValue={newName}
+        numberValue={newNumber}
+        onNameChange={handleNameChange}
+        onNumberChange={handleNumberChange}
+      />
+      <h3>Numbers</h3>
+      <Persons search={newSearch} phonebook={persons}/>
     </div>
   );
 }
