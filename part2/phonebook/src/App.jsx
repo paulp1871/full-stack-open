@@ -25,8 +25,8 @@ const App = () => {
 
     // Check if person already in there
     const personToAdd = {name: newName, number: newNumber, id: persons.length + 1}
-    if (persons.findIndex(person => person.name.toLowerCase() === personToAdd.name.toLowerCase()) !== -1) {
-      alert(`${newName} is already added to phonebook`);
+    if (persons.some(person => person.name.toLowerCase() === personToAdd.name.toLowerCase())) {
+      alert(`${personToAdd.name} is already added to phonebook`);
       setNewName(``);
       setNewNumber(``);
       return
