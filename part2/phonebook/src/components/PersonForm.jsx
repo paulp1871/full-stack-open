@@ -8,24 +8,26 @@ const PersonForm = ({
     return (
         <form onSubmit={onSubmit}>
             <div>
-            name: 
-            <input
-                value={nameValue}
-                onChange={onNameChange}
-            />
+                name: 
+                <input
+                    id='name-form'
+                    value={nameValue}
+                    onChange={onNameChange}
+                />
             </div>
             <div>
-            number: 
-            <input
-                value={numberValue}
-                onChange={onNumberChange}
-            />
+                number: 
+                <input
+                    id='number-form'
+                    value={numberValue}
+                    onChange={onNumberChange}
+                />
             </div>
             <div>
-            <button type="submit">add</button>
+                <button type="submit">add</button>
             </div>
       </form>
-    )
+    );
 }
 
 export default PersonForm
