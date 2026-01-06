@@ -12,7 +12,7 @@ const App = () => {
   const[newSearch, setNewSearch] = useState('');
 
   useEffect(() => {
-    phonebookServices.read()
+    phonebookServices.readAll()
       .then(initialPersons => {
         setPersons(initialPersons);
       })
@@ -26,17 +26,25 @@ const App = () => {
       return;
     }
 
-    const personToAdd = {name: newName, number: newNumber, id: String(persons.length + 1)}
+    const personToAdd = {name: newName, number: newNumber}
     if (persons.some(person => person.name.toLowerCase() === personToAdd.name.toLowerCase())) {
       alert(`${personToAdd.name} is already added to phonebook`);
       setNewName(``);
       setNewNumber(``);
       return;
     }
-    phonebookServices.create(personToAdd)
+    phonebookServices.add(personToAdd)
       .then(returnedPerson => setPersons(persons.concat(returnedPerson)));
     setNewName(``);
     setNewNumber(``);
+  }
+
+  const removePerson = (personID) => {
+    const personToRemove = persons.find(person => person.id === personID);
+    window.confirm(`Delete ${personToRemove.name} ?`)
+
+    phonebookServices.remove(personID)
+      .then(setPersons(persons.filter(person => person.id !== personID)))
   }
 
   const handleNameChange = (event) => {
@@ -67,7 +75,11 @@ const App = () => {
         onNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons search={newSearch} personsList={persons}/>
+      <Persons
+        search={newSearch}
+        personsList={persons}
+        removeFunction={removePerson}
+      />
     </div>
   );
 }
