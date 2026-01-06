@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
@@ -26,25 +25,39 @@ const App = () => {
       return;
     }
 
-    const personToAdd = {name: newName, number: newNumber}
-    if (persons.some(person => person.name.toLowerCase() === personToAdd.name.toLowerCase())) {
-      alert(`${personToAdd.name} is already added to phonebook`);
+    const existingPerson = persons.find(person => person.name.toLowerCase() === newName.toLowerCase());
+    if (existingPerson !== undefined) {
+      if (window.confirm(`${existingPerson.name} is already added to phonebook, replace the old number with a new one?`)) {
+        updatePerson(existingPerson, newNumber);
+      }
       setNewName(``);
       setNewNumber(``);
       return;
     }
+
+    const personToAdd = {name: newName, number: newNumber}
     phonebookServices.add(personToAdd)
-      .then(returnedPerson => setPersons(persons.concat(returnedPerson)));
-    setNewName(``);
-    setNewNumber(``);
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName(``);
+        setNewNumber(``);
+      });
   }
 
-  const removePerson = (personID) => {
-    const personToRemove = persons.find(person => person.id === personID);
-    window.confirm(`Delete ${personToRemove.name} ?`)
-
-    phonebookServices.remove(personID)
+  const removePerson = (personID, personName) => {
+    if (window.confirm(`Delete ${personName} ?`)) {
+      phonebookServices.remove(personID)
       .then(setPersons(persons.filter(person => person.id !== personID)))
+    }
+  }
+
+  const updatePerson = (person, updatedNumber) => {
+    const {id: personID} = person;
+    const updatedPerson = {...person, number: updatedNumber};
+    phonebookServices.update(personID, updatedPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id === returnedPerson.id ? returnedPerson : person))
+      });
   }
 
   const handleNameChange = (event) => {

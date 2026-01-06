@@ -3,18 +3,18 @@ const Persons = ({ search, personsList, removeFunction }) => {
         return personsList.map(person => 
             <p key={person.id}>
                 {person.name} {person.number}
-                <button onClick={() => removeFunction(person.id)}>delete</button>
+                <button onClick={() => removeFunction(person.id, person.name)}>delete</button>
             </p> 
         );
     }
     return personsList.reduce((searchResult, person) => {
         if (person.name.toLowerCase().includes(search.toLowerCase())) {
-            const match = 
+            searchResult.push(
                 <p key={person.id}>
                     {person.name} {person.number}
-                    <button onClick={() => removeFunction(person.id)}>delete</button>
-                </p>;
-            searchResult.push(match);
+                    <button onClick={() => removeFunction(person.id, person.name)}>delete</button>
+                </p>
+            );
             return searchResult;
         }
         return searchResult;
