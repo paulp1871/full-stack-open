@@ -3,16 +3,36 @@
     {
       "id": "1",
       "content": "HTML is easy",
-      "important": true
+      "important": false
     },
     {
       "id": "2",
       "content": "Browser can execute only JavaScript",
-      "important": false
+      "important": true
     },
     {
       "id": "3",
       "content": "GET and POST are the most important methods of HTTP protocol",
+      "important": true
+    },
+    {
+      "id": "f4d4",
+      "content": "Testing 1234",
+      "important": false
+    },
+    {
+      "id": "c5cc",
+      "content": "POST is what we are learning",
+      "important": true
+    },
+    {
+      "id": "0594",
+      "content": "Another test",
+      "important": false
+    },
+    {
+      "id": "fc85",
+      "content": "Sending one note!",
       "important": true
     }
   ]
