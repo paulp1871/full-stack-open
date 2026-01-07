@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [newSearch, setNewSearch] = useState('');
   const [message, setMessage] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     phonebookServices.readAll()
@@ -60,10 +61,18 @@ const App = () => {
     const updatedPerson = {...person, number: updatedNumber};
     phonebookServices.update(personID, updatedPerson)
       .then(returnedPerson => {
-        setMessage(`Changed ${returnedPerson.name}'s number`)
-        setTimeout(() => setMessage(null), 5000)
-        setPersons(persons.map(person => person.id === returnedPerson.id ? returnedPerson : person))
-      });
+        setMessage(`Changed ${returnedPerson.name}'s number`);
+        setTimeout(() => setMessage(null), 5000);
+        setPersons(persons.map(person => person.id === returnedPerson.id ? returnedPerson : person));
+      })
+      .catch(error => {
+        setError(true);
+        setMessage(`Information of ${person.name} has already been removed from server`);
+        setTimeout(() => {
+          setError(false);
+          setMessage(null);
+        }, 5000)
+      })
   }
 
   const handleNameChange = (event) => {
@@ -81,7 +90,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification message={message} />
+      <Notification error={error} message={message} />
       <Filter 
         value={newSearch}
         onChange={handleSearchChange}
