@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Notification from './components/Notification'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
@@ -8,7 +9,8 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
-  const[newSearch, setNewSearch] = useState('');
+  const [newSearch, setNewSearch] = useState('');
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     phonebookServices.readAll()
@@ -38,6 +40,8 @@ const App = () => {
     const personToAdd = {name: newName, number: newNumber}
     phonebookServices.add(personToAdd)
       .then(returnedPerson => {
+        setMessage(`Added ${returnedPerson.name}`)
+        setTimeout(() => setMessage(null), 5000)
         setPersons(persons.concat(returnedPerson));
         setNewName(``);
         setNewNumber(``);
@@ -56,6 +60,8 @@ const App = () => {
     const updatedPerson = {...person, number: updatedNumber};
     phonebookServices.update(personID, updatedPerson)
       .then(returnedPerson => {
+        setMessage(`Changed ${returnedPerson.name}'s number`)
+        setTimeout(() => setMessage(null), 5000)
         setPersons(persons.map(person => person.id === returnedPerson.id ? returnedPerson : person))
       });
   }
@@ -74,12 +80,13 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification message={message} />
       <Filter 
         value={newSearch}
         onChange={handleSearchChange}
       />
-      <h3>add a new</h3>
+      <h2>add a new</h2>
       <PersonForm
         onSubmit={addPerson}
         nameValue={newName}
@@ -87,7 +94,7 @@ const App = () => {
         onNameChange={handleNameChange}
         onNumberChange={handleNumberChange}
       />
-      <h3>Numbers</h3>
+      <h2>Numbers</h2>
       <Persons
         search={newSearch}
         personsList={persons}
