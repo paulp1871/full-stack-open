@@ -1,4 +1,5 @@
 import Country from './Country'
+import CountryListItem from './CountryListItem'
 
 const DisplayCountries = ({ search, countries }) => {
     if (search.length === 0) {
@@ -9,10 +10,9 @@ const DisplayCountries = ({ search, countries }) => {
         return (<p>Too many matches, specify another filter</p>)
     }
     else if (countries.length > 1) {
-        return (countries.map(country => 
-        <p key={country.name.official}>
-            {country.name.common}
-        </p>))
+        return (countries.map((country) => 
+            <CountryListItem country={country}/>
+        ))
     }
     else if (countries.length === 0) {
         return null
