@@ -33,7 +33,7 @@
     {
       "id": "fc85",
       "content": "Sending one note!",
-      "important": false
+      "important": true
     }
   ]
 }
