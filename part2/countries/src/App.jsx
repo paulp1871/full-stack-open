@@ -1,34 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
+import countriesService from './services/countries'
+import DisplayCountries from './components/DisplayCountries'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [search, setSearch] = useState('')
+  const [countries, setCountries] = useState([])
+  
+  useEffect(() => {
+    if (search.length > 0) {
+      countriesService.getAll(search)
+        .then(searchResults => setCountries(searchResults))
+    }
+  }, [search])
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+    <div>
+      <p>
+        find countries:
+        <input onChange={handleSearchChange}>
+        </input>
       </p>
-    </>
+      <DisplayCountries countries={countries} search={search} />
+    </div>
   )
 }
 
