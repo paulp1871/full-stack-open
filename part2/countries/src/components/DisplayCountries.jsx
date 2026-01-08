@@ -11,7 +11,7 @@ const DisplayCountries = ({ search, countries }) => {
     }
     else if (countries.length > 1) {
         return (countries.map((country) => 
-            <CountryListItem country={country}/>
+            <CountryListItem key={country.name.common} country={country}/>
         ))
     }
     else if (countries.length === 0) {
@@ -19,6 +19,10 @@ const DisplayCountries = ({ search, countries }) => {
     }
 
     const singleCountry = countries[0]
+
+    const lat = singleCountry?.capitalInfo?.latlng?.[0] || singleCountry?.latlng?.[0] 
+    const long = singleCountry?.capitalInfo?.latlng?.[1] || singleCountry?.latlng?.[1]
+
     return (
         <Country
             commonName={singleCountry.name.common}
@@ -27,8 +31,8 @@ const DisplayCountries = ({ search, countries }) => {
             languages={singleCountry.languages}
             flagImg={singleCountry.flags.svg}
             imgAlt={singleCountry.flags.alt}
-            lat={singleCountry.capitalInfo.latlng[0]}
-            long={singleCountry.capitalInfo.latlng[1]}
+            lat={lat}
+            long={long}
         />
     )
 }

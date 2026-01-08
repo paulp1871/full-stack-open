@@ -8,6 +8,9 @@ const CountryListItem = ( {country} ) => {
         setShow(!show)
     }
 
+    const lat = country?.capitalInfo?.latlng?.[0] || country?.latlng?.[0]
+    const long = country?.capitalInfo?.latlng?.[1] || country?.latlng?.[1]
+
     return (
         <>
             <p key={country.name.official}>
@@ -22,8 +25,8 @@ const CountryListItem = ( {country} ) => {
                 languages={country.languages}
                 flagImg={country.flags.svg}
                 imgAlt={country.flags.alt} 
-                lat={country.capitalInfo.latlng[0]}
-                long={country.capitalInfo.latlng[1]}
+                lat={lat}
+                long={long}
             /> : 
             null}
         </>
