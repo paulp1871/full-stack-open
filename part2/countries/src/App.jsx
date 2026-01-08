@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import countriesService from './services/countries'
+import { getAll } from './services/countries'
 import DisplayCountries from './components/DisplayCountries'
 
 const App = () => {
@@ -8,7 +8,7 @@ const App = () => {
   
   useEffect(() => {
     if (search.length > 0) {
-      countriesService.getAll(search)
+      getAll(search)
         .then(searchResults => setCountries(searchResults))
     }
   }, [search])

@@ -1,9 +1,26 @@
+import { useState, useEffect } from 'react'
+import { getWeather } from '../services/countries'
+
 const Country = (country) => {
+    const [weather, setWeather] = useState(null)
+
     const imgStyle = {
         height: 200,
         width: 300,
         paddingLeft: 0
     }
+    
+    useEffect(
+        () => {
+                getWeather(country.lat, country.long).then(weatherInfo => { 
+                setWeather({temp: weatherInfo.main.temp - 273.15, 
+                            windSpeed: weatherInfo.wind.speed,
+                            icon: `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`,
+                            alt: weatherInfo.weather[0].description
+                })
+            })
+        }, [])
+    
 
     const languagesList = Object.values(country.languages)
 
@@ -23,6 +40,18 @@ const Country = (country) => {
                 alt={country.imgAlt}
                 style={imgStyle}
             />
+            {!weather ?
+                null :
+                <>
+                    <h2>Weather in {country.capital}</h2>
+                    <p>Temperature: {weather.temp.toFixed(2)} Celcius</p>
+                    <img 
+                        src={weather.icon}
+                        alt={weather.alt}
+                    />
+                    <p>Wind: {weather.windSpeed} m/s</p>
+                </>
+            }
         </div>
     )
 }

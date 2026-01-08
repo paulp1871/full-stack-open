@@ -22,6 +22,8 @@ const CountryListItem = ( {country} ) => {
                 languages={country.languages}
                 flagImg={country.flags.svg}
                 imgAlt={country.flags.alt} 
+                lat={country.capitalInfo.latlng[0]}
+                long={country.capitalInfo.latlng[1]}
             /> : 
             null}
         </>

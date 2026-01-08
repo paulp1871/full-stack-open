@@ -27,6 +27,8 @@ const DisplayCountries = ({ search, countries }) => {
             languages={singleCountry.languages}
             flagImg={singleCountry.flags.svg}
             imgAlt={singleCountry.flags.alt}
+            lat={singleCountry.capitalInfo.latlng[0]}
+            long={singleCountry.capitalInfo.latlng[1]}
         />
     )
 }
