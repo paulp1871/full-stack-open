@@ -1,11 +1,7 @@
 import Country from './Country'
 import CountryListItem from './CountryListItem'
 
-const DisplayCountries = ({ search, countries }) => {
-    if (search.length === 0) {
-        return null
-    }
-
+const DisplayCountries = ({ countries }) => {
     if (countries.length > 10) {
         return (<p>Too many matches, specify another filter</p>)
     }
@@ -19,20 +15,16 @@ const DisplayCountries = ({ search, countries }) => {
     }
 
     const singleCountry = countries[0]
-
-    const lat = singleCountry?.capitalInfo?.latlng?.[0] || singleCountry?.latlng?.[0] 
-    const long = singleCountry?.capitalInfo?.latlng?.[1] || singleCountry?.latlng?.[1]
-
     return (
         <Country
-            commonName={singleCountry.name.common}
-            capital={singleCountry.capital[0]}
-            area={singleCountry.area}
-            languages={singleCountry.languages}
-            flagImg={singleCountry.flags.svg}
-            imgAlt={singleCountry.flags.alt}
-            lat={lat}
-            long={long}
+            commonName={singleCountry?.name?.common}
+            capital={singleCountry?.capital?.[0]}
+            area={singleCountry?.area}
+            languages={singleCountry?.languages}
+            flagImg={singleCountry?.flags?.svg}
+            imgAlt={singleCountry?.flags?.alt}
+            lat={singleCountry?.capitalInfo?.latlng?.[0]}
+            long={singleCountry?.capitalInfo?.latlng?.[0]}
         />
     )
 }

@@ -3,28 +3,35 @@ import { getAll } from './services/countries'
 import DisplayCountries from './components/DisplayCountries'
 
 const App = () => {
-  const [search, setSearch] = useState('')
   const [countries, setCountries] = useState([])
+  const [searchedCountries, setSearchedCountries] = useState([])
   
   useEffect(() => {
-    if (search.length > 0) {
-      getAll(search)
-        .then(searchResults => setCountries(searchResults))
-    }
-  }, [search])
+    getAll()
+      .then(countriesData => {
+        setCountries(countriesData) 
+      })
+      .catch(error => console.log(`${error.message}`))
+  }, [])
 
   const handleSearchChange = (event) => {
-    setSearch(search => event.target.value);
+    const currSearch = event.target.value
+    if (currSearch.length === 0) {
+      setSearchedCountries(searchedCountries => [])
+    }
+    else {
+      setSearchedCountries(searchedCountries => countries.filter(country => country.name.common.toLowerCase().includes(currSearch.toLowerCase())));
+    }
   }
 
   return (
     <div>
       <p>
         find countries:
-        <input onChange={handleSearchChange}>
+        <input id='country-search-bar' onChange={handleSearchChange}>
         </input>
       </p>
-      <DisplayCountries countries={countries} search={search} />
+      <DisplayCountries countries={searchedCountries} />
     </div>
   )
 }

@@ -2,12 +2,9 @@ import axios from 'axios'
 
 const api_key = import.meta.env.VITE_SOME_KEY
 
-export const getAll = (search) => {
+export const getAll = () => {
     return axios.get('https://studies.cs.helsinki.fi/restcountries/api/all')
                 .then(response => response.data)
-                .then(countriesData => countriesData.filter(country => 
-                    country.name.common.toLowerCase().includes(search.toLowerCase())
-                ))
 }
 
 export const getWeather = (lat, lon) => {
@@ -17,5 +14,4 @@ export const getWeather = (lat, lon) => {
                     const weatherInfo = {weather, main, wind}
                     return weatherInfo
                 })
-                .then()
 }
