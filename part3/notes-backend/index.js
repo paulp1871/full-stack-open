@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
 
+// middleware that parses a request's raw body and converts it into a javascript object 
+// puts that object into request.body after
+// runs before route handlers like .post(...)
+app.use(express.json())
+
 let notes = [
   {
     id: "1",
@@ -36,6 +41,34 @@ app.get('/api/notes/:id', (request, response) => {
     response.statusMessage = 'Note not found'
     response.status(404).end()
   }
+})
+
+const generateId = () => {
+  const maxId = notes.length > 0
+    ? Math.max(...notes.map(n => Number(n.id)))
+    : 0
+  return String(maxId + 1)
+}
+
+// route handler (executes after middleware parses request and assigns a js object to req.body)
+app.post('/api/notes', (request, response) => {
+  const body = request.body
+
+  if (!body.content) {
+    return response.status(400).json({ 
+      error: 'content missing' 
+    })
+  }
+
+  const note = {
+    content: body.content,
+    important: body.important || false,
+    id: generateId(),
+  }
+
+  notes = notes.concat(note)
+
+  response.json(note)
 })
 
 app.delete('/api/notes/:id', (request, response) => {
