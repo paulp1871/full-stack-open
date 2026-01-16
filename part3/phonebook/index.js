@@ -53,11 +53,26 @@ app.get('/info', (req, res) => {
 })
 
 app.post('/api/persons', (req, res) => {
+    if (!req.body.name || !req.body.number) {
+        res.status(400).json({
+            error: "Bad request",
+            message: "Request body could not be read properly"
+        })
+        return
+    }
+
+    if (persons.some(person => person.name.toLowerCase() === req.body.name.toLowerCase())) {
+        res.status(400).json({
+            error: "Bad request",
+            message: "Resource already exists"
+        })
+        return
+    }
+
     const id = `id${Math.random().toString(16).slice(2)}`
     const newPerson = {...req.body, id}
-
     persons = persons.concat(newPerson)
-    res.status(201).json(newPerson)
+    res.json(newPerson)
 })
 
 app.delete('/api/persons/:id', (req, res) => {
