@@ -28,6 +28,19 @@ app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
 
+app.get('/api/persons/:id', (req, res) => {
+    const id = req.params.id
+    const person = persons.find(person => person.id === id)
+
+    if (!person) {
+        res.statusMessage = 'Person not found'
+        res.status(404).end()
+        return
+    }
+
+    res.json(person)
+})
+
 app.get('/info', (req, res) => {
     const now = new Date()
     const reqTime = now.toString()
