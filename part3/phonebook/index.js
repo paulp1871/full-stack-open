@@ -1,5 +1,4 @@
 const express = require('express')
-
 const app = express()
 
 const persons = [
@@ -29,7 +28,15 @@ app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
 
-const PORT = 3001
+app.get('/info', (req, res) => {
+    const now = new Date()
+    const reqTime = now.toString()
+    res.send(`
+        <p>Phonebook has info for ${persons.length} people</p>
+        <p>${reqTime}</p>
+    `)
+})
 
+const PORT = 3001
 app.listen(PORT)
 console.log(`Server started on port ${PORT}`)
