@@ -1,7 +1,11 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
+const logger = morgan('tiny')
+
 app.use(express.json())
+app.use(logger)
 
 let persons = [
     { 
@@ -25,6 +29,10 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
+
+app.get('/', (req, res) => {
+    res.send('<h1>Phonebook app</h1>')
+})
 
 app.get('/api/persons', (req, res) => {
     res.json(persons)
@@ -83,5 +91,6 @@ app.delete('/api/persons/:id', (req, res) => {
 })
 
 const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
