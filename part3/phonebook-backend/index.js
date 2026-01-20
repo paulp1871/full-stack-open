@@ -20,6 +20,7 @@ const logger = morgan((tokens, req, res) => {
     return tiny.concat(tokens.post(req, res)).join(' ')
 })
 
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(logger)
 
