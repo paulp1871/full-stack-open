@@ -44,7 +44,7 @@ const note = new Note({
 // retrieve all documents from the database (more specifically, the notes collection) with the find method of the note model
 // the parameter of the method is an object expressing search conditions
 // search conditions must adhere to MongoDB's query syntax
-Note.find({}).then(result => {
+Note.find({important: false}).then(result => {
   result.forEach(note => {
     console.log(note)
   })
